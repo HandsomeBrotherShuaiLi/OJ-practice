@@ -1,0 +1,134 @@
+//poj_1611_并查集
+
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<set>
+using namespace std;
+int parent[30001];
+int find(int* p,int r)
+{
+	while(p[r]!=r)
+		r=p[r];
+	return r;
+}
+int main()
+{
+	int n,m;
+	while(1)
+	{
+		cin>>n>>m;
+		
+		if(n==0&&m==0)
+			break;
+		else if(m==0)
+		{
+			cout<<n<<endl;
+		}
+		else{
+			set<int> sum;
+			for(int i=0;i<n;i++)
+			{
+				parent[i]=i;
+			}
+			for(int i=0;i<m;i++){
+			int zu;
+			int x;
+			int y;
+			cin>>zu>>x;
+			sum.insert(x);
+			for(int j=1;j<zu;j++)
+			{
+				cin>>y;
+				sum.insert(y);
+				int a=find(parent,x);
+				int b=find(parent,y);
+				if(a>b)
+				{
+					parent[a]=b;
+				}
+				else if(a<b)
+				{
+					parent[b]=a;
+				}
+				x=y;
+			}
+			
+			}
+			sum.insert(0);
+			int ans=0;
+			set<int>::iterator it;
+			for(it=sum.begin();it!=sum.end();it++)
+			{
+				if(find(parent,*it)==0)
+					ans++;
+			}
+			cout<<ans<<endl;
+}
+	}
+
+	return 0;
+}
+
+
+//poj_2524_并查集
+
+#include<iostream>
+#include<algorithm>
+
+using namespace std;
+int parent[50001];
+int find(int* p,int r)
+{
+	while(p[r]!=r)
+		r=p[r];
+	return r;
+}
+int main()
+{
+	int n,m;
+	int c=0;
+	while(1)
+	{
+		cin>>n>>m;
+		
+		if(n==0&&m==0)
+			break;
+		else if(m==0)
+		{
+			c++;
+			cout<<"Case "<<c<<": "<<n<<endl;
+		}
+		else{
+			c++;
+			
+			for(int i=0;i<n;i++)
+			{
+				parent[i]=i;
+			}
+			int ans=n;
+			for(int i=0;i<m;i++){
+			
+			int x;
+			int y;
+			cin>>x>>y;
+			int a=find(parent,x);
+            int b=find(parent,y);
+				if(a>b)
+				{
+					parent[a]=b;
+					ans--;
+				}
+				else if(a<b)
+				{
+					parent[b]=a;
+					ans--;
+				}
+			}
+        cout<<"Case "<<c<<": "<<ans<<endl;
+		}
+	}
+  return 0;
+}
+
