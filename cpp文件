@@ -132,3 +132,36 @@ int main()
   return 0;
 }
 
+ccf csp_分蛋糕
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<cstring> 
+using namespace std;
+int main()
+{
+	int n,k,x;
+	cin>>n>>k;
+	vector<int> cake;
+	for(int i=0;i<n;i++)
+	{
+		cin>>x;
+		cake.push_back(x);
+	}
+	int f=0;
+	int sum=0;
+	for(int i=0;i<n;i++)
+	{
+	  sum+=cake[i];
+	  if(sum>=k)
+	  {
+	  	f++;
+	  	sum=0;
+	  }
+	 }
+	 if(sum>0)
+	 f++;
+    cout<<f<<endl;
+    return 0;
+} 
+
