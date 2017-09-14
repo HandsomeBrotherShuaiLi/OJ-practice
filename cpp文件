@@ -262,3 +262,67 @@ public:
         return ans;
     }
 };
+//hdoj 1016  dfs
+#include<iostream>
+#include<algorithm>
+#include<stdio.h>
+#include<math.h>
+using namespace std;
+int num[21];
+bool use[21];
+int n;
+ bool isPrime(int x)
+ {
+ 	for(int i=2;i<=sqrt(x);i++)
+ 	{
+ 		if(x%i==0)
+ 		  return false;
+	 }
+	 return true;
+ }
+ void func(int x)//第x位数取值函数 
+ {
+ 	if(x==n)
+ 	{
+ 		 if(isPrime(num[n-1]+1))
+		 {
+		 	for(int i=0;i<n-1;i++)
+		 	cout<<num[i]<<" ";
+		 	cout<<num[n-1]<<endl;
+		 	return;
+		 }
+	 }
+	 else{
+	 	for(int i=2;i<=n;i++)
+	 	{
+	 		if(use[i]==false && isPrime(num[x-1]+i))
+	 		{
+	 			num[x]=i;
+	 			use[i]=true;
+	 			func(x+1);
+	 			use[i]=false;
+			 }
+		 }
+	 }
+ }
+ int main()
+ {
+ 	int cx=1;
+ 	while(scanf("%d",&n)!=EOF)
+ 	{
+ 		for(int i=2;i<=n;i++)
+ 		{
+ 			use[i]=false;
+		 }
+		 num[0]=1;
+		 use[1]=true;
+		  printf("Case %d:\n",cx);
+		 func(1);
+		 cout<<endl;
+		 cx++;
+	 }
+	 return 0;
+ }
+
+ 
+ 
