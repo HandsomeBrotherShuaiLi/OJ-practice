@@ -324,5 +324,134 @@ int n;
 	 return 0;
  }
 
+ //hdoj 1181 dfs
+ #include<stdio.h>  
+#include<string.h>  
+#include<algorithm>  
+using namespace std;  
+char ch[1111][1111];  
+int n,use[1111];  
+int F;  
+void dfs(int x)  
+{  
+    int l=strlen(ch[x]);  
+    if(ch[x][l-1]=='m')  
+    {  
+        F=1;  
+        return;  
+    }  
+    for(int j=0;j<n;j++)  
+    {  
+        if(ch[x][l-1]==ch[j][0]&&use[j]==0)  
+        {  
+            use[j]=1;  
+            dfs(j);  
+            use[j]=0;  
+        }  
+    }  
+}  
+int main()  
+{  
+    while(~scanf("%s",ch[0]))  
+    {  
+        memset(use,0,sizeof(use));  
+        int i,flag=0;  
+        n=1;F=0;  
+        while(1)  
+        {  
+            scanf("%s",ch[n]);  
+            int l=strlen(ch[n]);  
+            if(ch[n][l-1]=='m')  
+                flag=1;  
+            if(ch[n][0]=='0')  
+                break;  
+            n++;  
+        }  
+        if(!flag)  
+            printf("No.\n");  
+        else  
+        {  
+            for(i=0;i<n;i++)  
+            {  
+                if(ch[i][0]=='b')  
+                    dfs(i);  
+            }  
+            if(F)  
+                printf("Yes.\n");  
+            else  
+                printf("No.\n");  
+        }     
+    }  
+    return 0;  
+}  
+
+or:
+
+#include<iostream>
+#include<algorithm>
+#include<stdio.h>
+#include<math.h>
+#include<string>
+#include<vector>
+using namespace std;
+bool mark[10000000];
+
+void dfs(vector<string> s,int num,char j,int & ans)//从0开始 
+ {
+	 
+ 	if(*(s[num].end()-1)=='m'&&*(s[num].begin())==j)
+ 	{
+ 	  ans=1;
+	  mark[num]=true;
+ 	  return;
+ 	}
+	unsigned int sum=0;
+	for(unsigned int i=0;i<s.size();i++)
+		if(mark[i]==true)
+			sum++;
+	if(sum==s.size())
+		return;
+
+	if(*(s[num].begin())==j)
+	{
+	 
+	  for( int i=0;i<int(s.size());i++)
+	  {
+	  	if(*(s[i].begin())==*(s[num].end()-1)&&!mark[i])
+	    {  
+			mark[num]=true;
+		    dfs(s,i,*(s[i].begin()),ans);
+		    mark[i]=false;
+		}
+	  }
+	}
+}
+ int main()
+ {
  
+ 	char ch;
+	
+ 	while((ch=getchar())!=EOF)
+ 	{
+ 		string tmp;
+ 		vector<string>zouyu;
+ 	    int ans=0;
+ 		while(cin>>tmp && tmp[0]!='0')
+ 		{
+ 			zouyu.push_back(tmp);
+ 		}
+		for(int i=0;i<int(zouyu.size());i++)
+			mark[i]=false;
+		for(int i=0;i<int(zouyu.size());i++)
+		   dfs(zouyu,i,'b',ans);
+		  if(ans==1)
+		  cout<<"Yes."<<endl;
+		  else
+		  cout<<"No."<<endl;
+		ans=0;
+		zouyu.clear();
+
+	 }
+	 return 0;
+ }
  
